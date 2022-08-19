@@ -4,6 +4,10 @@ import routerAPI from './routes/index.js';
 
 const app = express();
 
+//Middlewares
+//Body-parser (json)
+app.use(express.json());
+
 //Routes
 routerAPI(app);
 
