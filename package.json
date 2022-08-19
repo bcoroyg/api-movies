@@ -8,7 +8,10 @@
     "dev": "DEBUG=app:* && nodemon src/index",
     "start": "NODE_ENV=production && node src/index",
     "prepare": "husky install",
-    "test": "mocha **/**/*.test.js --exit"
+    "test": "mocha **/**/*.test.js --exit",
+    "cover": "nyc yarn test",
+    "report": "nyc report --reporter=html && open coverage/index.html"
+
   },
   "dependencies": {
     "@hapi/boom": "^10.0.0",
@@ -25,6 +28,7 @@
     "lint-staged": ">=10",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
+    "nyc": "^15.1.0",
     "prettier": "^2.7.1",
     "supertest": "^6.2.4"
   },
@@ -33,5 +37,15 @@
   },
   "lint-staged": {
     "*.js": "eslint --cache --fix"
+  },
+  "nyc": {
+    "all": true,
+    "include": [
+      "src/routes",
+      "src/controllers",
+      "src/services",
+      "src/lib",
+      "src/utils"
+    ]
   }
 }
