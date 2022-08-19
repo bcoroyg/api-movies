@@ -1,6 +1,7 @@
 import express from 'express';
 import config from './config/index.js';
 import routerAPI from './routes/index.js';
+import { errorHandler, logErrors } from './utils/middlewares/errorHandlers.js';
 
 const app = express();
 
@@ -10,6 +11,10 @@ app.use(express.json());
 
 //Routes
 routerAPI(app);
+
+//Middlewares de Errores
+app.use(logErrors);
+app.use(errorHandler);
 
 //server
 app.listen(config.port, () => {
