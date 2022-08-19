@@ -11,10 +11,10 @@
     "test": "mocha **/**/*.test.js --exit",
     "cover": "nyc yarn test",
     "report": "nyc report --reporter=html && open coverage/index.html"
-
   },
   "dependencies": {
     "@hapi/boom": "^10.0.0",
+    "bcrypt": "^5.0.1",
     "express": "^4.18.1",
     "joi": "^17.6.0",
     "mongodb": "^4.9.0"
