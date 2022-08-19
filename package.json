@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "DEBUG=app:* && nodemon src/index",
     "start": "NODE_ENV=production && node src/index",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "test": "mocha **/**/*.test.js --exit"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.0",
@@ -22,8 +23,10 @@
     "eslint-plugin-prettier": "^4.2.1",
     "husky": ">=7",
     "lint-staged": ">=10",
+    "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "supertest": "^6.2.4"
   },
   "engines": {
     "node": "16.x"

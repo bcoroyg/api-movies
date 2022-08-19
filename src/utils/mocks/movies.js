@@ -1,6 +1,6 @@
 const moviesMock = [
   {
-    id: 'd2a4a062-d256-41bb-b1b2-9d915af6b75e',
+    _id: '62ffb3c8233483153e9de12d',
     title: 'Notti bianche, Le (White Nights)',
     year: 2019,
     cover: 'http://dummyimage.com/800x600.png/ff4444/ffffff',
@@ -18,8 +18,8 @@ const moviesMock = [
       'Adventure|Animation|Children|Comedy|Fantasy',
       'Drama'
     ]
-  },
-  {
+  }
+  /* {
     id: '3f951b6d-03fa-4fb0-a7a1-188c0abe9e06',
     title: "King Solomon's Mines",
     year: 2019,
@@ -150,7 +150,25 @@ const moviesMock = [
     source:
       'http://columbia.edu/eget/orci/vehicula/condimentum/curabitur/in/libero.html',
     tags: ['Action|Adventure|Comedy|Drama|War', 'Animation', 'Drama']
-  }
+  } */
 ];
 
-export { moviesMock };
+const filteredMoviesMock = (tag) => {
+  return moviesMock.filter(movie => movie.tags.includes(tag));
+}
+
+class MoviesServiceMock {
+  async getMovies() {
+    return Promise.resolve(moviesMock);
+  }
+
+  async createMovie() {
+    return Promise.resolve(moviesMock[0]);
+  }
+}
+
+export {
+  moviesMock,
+  filteredMoviesMock,
+  MoviesServiceMock,
+ };

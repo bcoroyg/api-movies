@@ -25,3 +25,5 @@ app.use(errorHandler);
 app.listen(config.port, () => {
   console.log(`Listening http://localhost:${config.port}`);
 });
+
+export default app;
