@@ -1,12 +1,15 @@
 import { Router } from "express";
 import MoviesService from "../services/movies.service.js";
+import cacheResponse from "../utils/cacheResponse.js";
 import validationHandler from "../utils/middlewares/validationHandler.js";
 import { createMovieSchema, movieIdSchema, updateMovieSchema } from "../utils/schemas/movies.js";
+import { FIVE_MINUTES_IN_SECONDS } from "../utils/time.js";
 
 const router = Router();
 const moviesService = new MoviesService;
 
 router.get('/', async (req, res, next) => {
+  cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
   const { tags } = req.query;
   try {
     const movies = await moviesService.getMovies({ tags });
