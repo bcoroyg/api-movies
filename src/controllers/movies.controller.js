@@ -1,4 +1,5 @@
 import { Router } from "express";
+import passport from 'passport';
 import MoviesService from "../services/movies.service.js";
 import cacheResponse from "../utils/cacheResponse.js";
 import validationHandler from "../utils/middlewares/validationHandler.js";
@@ -8,21 +9,25 @@ import { FIVE_MINUTES_IN_SECONDS } from "../utils/time.js";
 const router = Router();
 const moviesService = new MoviesService;
 
-router.get('/', async (req, res, next) => {
-  cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
-  const { tags } = req.query;
-  try {
-    const movies = await moviesService.getMovies({ tags });
-    res.status(200).json({
-      data: movies,
-      message: 'movies listed'
-    })
-  } catch (error) {
-    next(error);
+router.get('/',
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
+    const { tags } = req.query;
+    try {
+      const movies = await moviesService.getMovies({ tags });
+      res.status(200).json({
+        data: movies,
+        message: 'movies listed'
+      })
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get('/:movieId',
+  passport.authenticate('jwt', { session: false }),
   validationHandler(movieIdSchema, "params"),
   async (req, res, next) => {
     const { movieId } = req.params;
@@ -39,6 +44,7 @@ router.get('/:movieId',
 );
 
 router.post('/',
+  passport.authenticate('jwt', { session: false }),
   validationHandler(createMovieSchema),
   async (req, res, next) => {
     const { body: movie } = req
@@ -55,6 +61,7 @@ router.post('/',
 );
 
 router.put('/:movieId',
+  passport.authenticate('jwt', { session: false }),
   validationHandler(movieIdSchema, "params"),
   validationHandler(updateMovieSchema),
   async (req, res, next) => {
@@ -73,6 +80,7 @@ router.put('/:movieId',
 );
 
 router.delete('/:movieId',
+  passport.authenticate('jwt', { session: false }),
   validationHandler(movieIdSchema, "params"),
   async (req, res, next) => {
     const { movieId } = req.params;
