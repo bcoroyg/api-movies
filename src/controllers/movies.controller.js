@@ -2,6 +2,7 @@ import { Router } from "express";
 import passport from 'passport';
 import MoviesService from "../services/movies.service.js";
 import cacheResponse from "../utils/cacheResponse.js";
+import scopesValidationHandler from "../utils/middlewares/scopesValidationHandler.js";
 import validationHandler from "../utils/middlewares/validationHandler.js";
 import { createMovieSchema, movieIdSchema, updateMovieSchema } from "../utils/schemas/movies.js";
 import { FIVE_MINUTES_IN_SECONDS } from "../utils/time.js";
@@ -11,6 +12,7 @@ const moviesService = new MoviesService;
 
 router.get('/',
   passport.authenticate('jwt', { session: false }),
+  scopesValidationHandler(['read:movies']),
   async (req, res, next) => {
     cacheResponse(res, FIVE_MINUTES_IN_SECONDS);
     const { tags } = req.query;
@@ -28,6 +30,7 @@ router.get('/',
 
 router.get('/:movieId',
   passport.authenticate('jwt', { session: false }),
+  scopesValidationHandler(['read:movies']),
   validationHandler(movieIdSchema, "params"),
   async (req, res, next) => {
     const { movieId } = req.params;
@@ -45,6 +48,7 @@ router.get('/:movieId',
 
 router.post('/',
   passport.authenticate('jwt', { session: false }),
+  scopesValidationHandler(['create:movies']),
   validationHandler(createMovieSchema),
   async (req, res, next) => {
     const { body: movie } = req
@@ -62,6 +66,7 @@ router.post('/',
 
 router.put('/:movieId',
   passport.authenticate('jwt', { session: false }),
+  scopesValidationHandler(['update:movies']),
   validationHandler(movieIdSchema, "params"),
   validationHandler(updateMovieSchema),
   async (req, res, next) => {
@@ -81,6 +86,7 @@ router.put('/:movieId',
 
 router.delete('/:movieId',
   passport.authenticate('jwt', { session: false }),
+  scopesValidationHandler(['deleted:movies']),
   validationHandler(movieIdSchema, "params"),
   async (req, res, next) => {
     const { movieId } = req.params;
