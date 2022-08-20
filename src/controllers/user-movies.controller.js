@@ -42,8 +42,8 @@ router.post(
         data: createdUserMovieId,
         message: 'user movie created'
       });
-    } catch (err) {
-      next(err);
+    } catch (error) {
+      next(error);
     }
   }
 );

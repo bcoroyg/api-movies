@@ -1,4 +1,4 @@
-if(process.env.NODE_ENV !== 'production'){
+if (process.env.NODE_ENV !== 'production') {
   (await import("dotenv")).config();
 };
 
@@ -10,6 +10,11 @@ const config = {
   dbHost: process.env.DB_HOST,
   dbName: process.env.DB_NAME,
   dbPort: process.env.DB_PORT,
+  defaultAdminPassword: process.env.DEFAULT_ADMIN_PASSWORD,
+  defaultUserPassword: process.env.DEFAULT_USER_PASSWORD,
+  authJwtSecret: process.env.AUTH_JWT_SECRET,
+  publicApiKeyToken: process.env.PUBLIC_API_KEY_TOKEN,
+  adminApiKeyToken: process.env.ADMIN_API_KEY_TOKEN,
 };
 
 export default config;
