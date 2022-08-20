@@ -3,11 +3,15 @@ import boom from '@hapi/boom';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import ApiKeysService from "../services/api-keys.service.js";
+import UsersService from "../services/users.service.js";
 import config from "../config/index.js";
+import validationHandler from "../utils/middlewares/validationHandler.js";
+import { createUserSchema } from "../utils/schemas/users.js";
 
 const router = Router();
 
 const apiKeysService = new ApiKeysService();
+const usersService = new UsersService();
 
 router.post('/sign-in',
   async (req, res, next) => {
@@ -53,6 +57,24 @@ router.post('/sign-in',
         next(error);
       }
     })(req, res, next);
+  }
+);
+
+router.post('/sign-up',
+  validationHandler(createUserSchema),
+  async (req, res, next) => {
+    const { body: user } = req;
+
+    try {
+      const createdUserId = await usersService.createUser({ user });
+
+      res.status(201).json({
+        data: createdUserId,
+        message: 'user created'
+      });
+    } catch (error) {
+      next(error);
+    }
   }
 );
 
