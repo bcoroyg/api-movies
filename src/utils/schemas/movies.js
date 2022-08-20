@@ -39,6 +39,7 @@ const updateMovieSchema = Joi.object({
 });
 
 export {
+  movieId,
   movieIdSchema,
   createMovieSchema,
   updateMovieSchema

@@ -29,6 +29,7 @@ const createProviderUserSchema = joi.object({
 });
 
 export {
+  userId,
   userIdSchema,
   createUserSchema,
   createProviderUserSchema
