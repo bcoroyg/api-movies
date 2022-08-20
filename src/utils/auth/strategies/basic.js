@@ -6,7 +6,6 @@ import UsersService from '../../../services/users.service.js';
 const BasicStrategy = new Strategy(
   async (email, password, cb) => {
     const usersService = new UsersService();
-
     try {
       const user = await usersService.getUser({ email });
 
